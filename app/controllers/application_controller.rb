@@ -1,8 +1,28 @@
 class ApplicationController < ActionController::API
     include ActionController::Cookies
   
-    def hello_world
-      session[:count] = (session[:count] || 0) + 1
-      render json: { count: session[:count] }
+    # helper_method :current_user
+
+    def current_user
+      if session[:user_id]
+        @current_user  = User.find(session[:user_id])
+      end
     end
+    
+    def log_in(user)
+      session[:user_id] = user.id
+      @current_user = user
+      redirect_to root_path
+    end
+    
+    def logged_in?
+      !current_user.nil?
+    end
+    
+    def log_out
+      session.delete(:user_id)
+      @current_user = nil
+    end
+
+    
   end

@@ -52,3 +52,5 @@ gem "active_model_serializers", "~> 0.10.13"
 gem "devise", "~> 4.8"
 
 gem "redis", "~> 5.0"
+
+gem "turbo-rails", "~> 1.3"
