@@ -1,12 +1,22 @@
 
 
-export function addUsers(user) {
-  return {
-    type: "users/add",
-    payload: user,
+// export function addUsers(user) {
+//   return {
+//     type: "users/add",
+//     payload: user,
+//   };
+// }
+
+export function addUsers1() {
+  return function (dispatch) {
+    fetch("/users")
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch({ type: "users/add", payload: data});
+        
+      });
   };
 }
-
  
   // Reducer
   const initialState = [];

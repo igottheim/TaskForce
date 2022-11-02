@@ -1,4 +1,7 @@
 import React, { useState, } from "react";
+import { useDispatch } from "react-redux";
+import { addUsers1 } from "./userSlice";
+import actionCable from 'actioncable'
 
   
 function SignUp({ setUser}) {
@@ -9,6 +12,7 @@ function SignUp({ setUser}) {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [errors, setErrors] = useState([]);
 
+  const dispatch = useDispatch();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -28,7 +32,7 @@ function SignUp({ setUser}) {
       }),
     }).then((r) => {
       if (r.ok) {
-        r.json().then((user) => setUser(user))
+        r.json().then((user) => dispatch(addUsers1(user)))
       }
       else {
         r.json().then((err) => setErrors(err.error));

@@ -7,19 +7,25 @@ import SignUp from "./Signup";
 import { useSelector, useDispatch } from "react-redux";
 import { addUsers } from "./userSlice";
 import { addRooms } from "./roomSlice";
+import { addUsers1 } from "./userSlice";
 
 
 
-function App() {
+function App({ cable }) {
   const [count, setCount] = useState(0);
   const [currentUser, setcurrentUser] = useState(null)
   const [rooms, setRooms] = useState([])
   const [users, setUsers] = useState([])
 
  
-
+  const catPics = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(addUsers1());
+  }, []);
+
+  console.log(catPics)
 
   useEffect(() => {
     // auto-login
@@ -41,12 +47,12 @@ function App() {
     ,[])
 
 
-  useEffect(()=>{
-    fetch('/users')
-    .then(r=> r.json())
-    .then((data) => dispatch(addUsers(data)))
-    }
-    ,[])
+  // useEffect(()=>{
+  //   fetch('/users')
+  //   .then(r=> r.json())
+  //   .then((data) => dispatch(addUsers(data)))
+  //   }
+  //   ,[])
 
 
   
@@ -82,7 +88,7 @@ function App() {
               <h1 user = {currentUser} ></h1>
             </Route>
             <Route path="/rooms">
-            <Home user = {currentUser} rooms = {rooms} users = {users}></Home>
+            <Home user = {currentUser} cable = { cable } rooms = {rooms} users = {users}></Home>
             </Route>
           </Switch>
         ) : (
